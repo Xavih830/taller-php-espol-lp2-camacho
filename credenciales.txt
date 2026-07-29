@@ -1,0 +1,3 @@
+En este archivo se encuentran las credenciales que fueron usadas para probar la app.
+1. usuario: 2450766510, clave: 123456789
+2. usuario: 0968876455, clave: 123456789

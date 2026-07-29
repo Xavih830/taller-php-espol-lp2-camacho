@@ -2,9 +2,13 @@
     function guardarTarea($usuario, $texto){
         $archivo = "tareas_$usuario.csv";
         $maxId = 0;
+        $lineas = [];
 
-        $lineas = file($archivo);
-        if (file_exists($archivo) && (count($lineas) > 0)){
+        if (file_exists($archivo)){
+            $lineas = file($archivo);
+        }
+
+        if ((count($lineas) > 0)){
             foreach ($lineas as $linea){
                 $variables = explode(',', $linea);
                 $maxId = max($maxId, (int)$variables[0]);
@@ -12,7 +16,7 @@
         }
 
         $id = $maxId + 1;
-        $linea = "$id, $texto, pendiente";
+        $linea = "$id,$texto,pendiente\n";
         file_put_contents($archivo, $linea, FILE_APPEND);
     }
 
@@ -23,12 +27,14 @@
         $completadas = [];
 
         $lineas = file("tareas_$usuario.csv");
-        foreach ($lineas as $linea){
-            $variables = explode(',', $linea);
-            if ($variables[2] == 'pendiente'){
-                $pendientes[] = $linea;
-            } else {
-                $completadas[] = $linea;
+        if (count($lineas) > 0){
+            foreach ($lineas as $linea){
+                $variables = explode(',', $linea);
+                if (trim($variables[2]) == 'pendiente'){
+                    $pendientes[] = $linea;
+                } else {
+                    $completadas[] = $linea;
+                }
             }
         }
 
@@ -46,7 +52,7 @@
         $nuevasLineas = [];
         $lineas = file("tareas_$usuario.csv");
         foreach ($lineas as $linea){
-            $variables = explode(',', $linea);
+            $variables = explode(',', trim($linea));
             if ($variables[0] == $id){
                 $variables[2] = 'completada';
             }
@@ -54,7 +60,7 @@
             $nuevasLineas[] = implode(',', $variables);
         }
 
-        file_put_contents("tareas_$usuario.csv", implode("\n", $nuevasLineas). "\n");
+        file_put_contents("tareas_$usuario.csv", implode("\n", $nuevasLineas));
     }
 
     function eliminarTarea($usuario, $id){
@@ -62,7 +68,7 @@
 
         $lineas = file("tareas_$usuario.csv");
         foreach ($lineas as $i => $linea){
-            $variables = explode(',', $linea);
+            $variables = explode(',', trim($linea));
             if ($variables[0] == $id){
                 unset($lineas[$i]);
             }

@@ -69,3 +69,13 @@ code {
   border-radius: 3px;
   font-family: Consolas, monospace;
 }
+
+.header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+
+   a {
+    font-weight: bold;
+   }
+}
