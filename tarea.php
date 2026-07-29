@@ -60,20 +60,21 @@
             $nuevasLineas[] = implode(',', $variables);
         }
 
-        file_put_contents("tareas_$usuario.csv", implode("\n", $nuevasLineas));
+        file_put_contents("tareas_$usuario.csv", empty($nuevasLineas) ? "" : implode("\n", $nuevasLineas) . "\n");
     }
 
     function eliminarTarea($usuario, $id){
         if (!file_exists("tareas_$usuario.csv")) return false;
 
         $lineas = file("tareas_$usuario.csv");
-        foreach ($lineas as $i => $linea){
+        $nuevasLineas = [];
+        foreach ($lineas as $linea){
             $variables = explode(',', trim($linea));
-            if ($variables[0] == $id){
-                unset($lineas[$i]);
+            if ($variables[0] != $id){
+                $nuevasLineas[] = implode(',', $variables);
             }
         }
 
-        file_put_contents("tareas_$usuario.csv", implode("\n", $lineas));
+        file_put_contents("tareas_$usuario.csv", empty($nuevasLineas) ? "" : implode("\n", $nuevasLineas) . "\n");
     }
 ?>

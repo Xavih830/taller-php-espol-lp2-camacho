@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
+    <div class="contenedor">
+    <span class="eyebrow">Nueva cuenta</span>
     <h1>Formulario de Registro</h1>
     <form method="POST" action="bienvenido.php">
         <label>Cédula:</label>
@@ -31,5 +33,6 @@
         <input type="submit" value="Registrar">
         <input type="reset" value="Resetear">
     </form>
+    </div>
 </body>
 </html>

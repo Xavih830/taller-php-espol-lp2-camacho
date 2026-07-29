@@ -31,7 +31,7 @@
     $completadas = [];
 
     $listaTareas = listarTareas($usuario);
-    
+
     if ($listaTareas){
         $pendientes = $listaTareas['pendientes'];
         $completadas = $listaTareas['completadas'];
@@ -42,51 +42,68 @@
 <html>
 <head><link rel="stylesheet" href="estilos.css"></head>
 <body>
+<div class="contenedor contenedor--ancha">
     <div class="header">
         <h1>Gestor de tareas</h1>
-        <a href="logout.php">Cerrar sesion</a>
+        <a href="logout.php">Cerrar sesión</a>
     </div>
-    <form method="POST" action="tareas.php">
-        <label>Tarea:</label>
-        <input type="text" name="tarea" required><br>
-        <input type="submit" value="Guardar">
-        <label>Tareas pendientes:</label>
-        <ul>
-            <?php if($listaTareas): ?>
-                <?php if(count($pendientes)): ?>
-                    <?php foreach($pendientes as $p): ?>
-                        <?php $desempaquetado = explode(',', $p)?>
-                        <li>
-                            <?= htmlspecialchars("$desempaquetado[0] | $desempaquetado[1] | ") ?>
-                            <a href="tareas.php?accion=completar&id=<?= $desempaquetado[0] ?>">Completar</a> | 
-                            <a href="tareas.php?accion=eliminar&id=<?= $desempaquetado[0] ?>">Eliminar</a>
-                        </li>
-                    <?php endforeach?>
-                <?php else: ?>
-                    <p>Aqui se mostraran tus tareas pendientes cuando agregues una.</p>
-                <?php endif?>
-            <?php else: ?>
-                <p>Aqui se mostraran tus tareas pendientes cuando agregues una.</p>
-            <?php endif?>
-        </ul>
-        <label>Tarea completadas:</label>
-        <ul>
-            <?php if($listaTareas): ?>
-                <?php if(count($completadas)): ?>
-                    <?php foreach($completadas as $c): ?>
-                        <?php $desempaquetado = explode(',', $c)?>
-                        <li>
-                            <?= htmlspecialchars("$desempaquetado[0] | $desempaquetado[1] | ") ?>
-                            <a href="tareas.php?accion=eliminar&id=<?= $desempaquetado[0] ?>">Eliminar</a>
-                        </li>
-                    <?php endforeach?>
-                <?php else: ?>
-                    <p>Aqui se mostraran tus tareas completadas cuando termines una.</p>
-                <?php endif?>
-            <?php else: ?>
-                <p>Aqui se mostraran tus tareas completadas cuando termines una.</p>
-            <?php endif?>
-        </ul>
+
+    <form method="POST" action="tareas.php" class="form-agregar">
+        <div class="campo-tarea">
+            <label>Nueva tarea:</label>
+            <input type="text" name="tarea" required>
+        </div>
+        <input type="submit" value="Agregar">
     </form>
+
+    <div class="tableros">
+        <div class="tablero">
+            <h2>Pendientes</h2>
+            <ul>
+                <?php if($listaTareas): ?>
+                    <?php if(count($pendientes) > 0): ?>
+                        <?php foreach($pendientes as $p): ?>
+                            <?php $desempaquetado = explode(',', $p)?>
+                            <li class="tarea-item">
+                                <span class="tarea-texto"><?= htmlspecialchars($desempaquetado[1]) ?></span>
+                                <span class="tarea-acciones">
+                                    <a class="accion-completar" href="tareas.php?accion=completar&id=<?= $desempaquetado[0] ?>">Completar</a>
+                                    <a class="accion-eliminar" href="tareas.php?accion=eliminar&id=<?= $desempaquetado[0] ?>">Eliminar</a>
+                                </span>
+                            </li>
+                        <?php endforeach?>
+                    <?php else: ?>
+                        <p class="vacio">Aqui se mostraran tus tareas pendientes cuando agregues una.</p>
+                    <?php endif?>
+                <?php else: ?>
+                    <p class="vacio">Aqui se mostraran tus tareas pendientes cuando agregues una.</p>
+                <?php endif?>
+            </ul>
+        </div>
+
+        <div class="tablero">
+            <h2>Completadas</h2>
+            <ul>
+                <?php if($listaTareas): ?>
+                    <?php if(count($completadas) > 0): ?>
+                        <?php foreach($completadas as $c): ?>
+                            <?php $desempaquetado = explode(',', $c)?>
+                            <li class="tarea-item">
+                                <span class="tarea-texto"><?= htmlspecialchars($desempaquetado[1]) ?></span>
+                                <span class="tarea-acciones">
+                                    <a class="accion-eliminar" href="tareas.php?accion=eliminar&id=<?= $desempaquetado[0] ?>">Eliminar</a>
+                                </span>
+                            </li>
+                        <?php endforeach?>
+                    <?php else: ?>
+                        <p class="vacio">Aqui se mostraran tus tareas completadas cuando termines una.</p>
+                    <?php endif?>
+                <?php else: ?>
+                    <p class="vacio">Aqui se mostraran tus tareas completadas cuando termines una.</p>
+                <?php endif?>
+            </ul>
+        </div>
+    </div>
+</div>
 </body>
 </html>

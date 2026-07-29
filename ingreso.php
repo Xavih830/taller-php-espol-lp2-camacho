@@ -22,8 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head><link rel="stylesheet" href="estilos.css"></head>
 <body>
+    <div class="contenedor contenedor--angosta">
+    <span class="eyebrow">Acceso</span>
     <h1>Ingreso</h1>
-    <?php if ($error): ?><p style="color:red;"><?= $error ?></p><?php endif; ?>
+    <?php if ($error): ?><p class="error"><?= $error ?></p><?php endif; ?>
     <form method="POST" action="ingreso.php">
         <label>Cédula:</label>
         <input type="text" name="cedula" required><br>
@@ -31,5 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="password" name="clave" required><br>
         <input type="submit" value="Ingresar">
     </form>
+    </div>
 </body>
 </html>

@@ -27,8 +27,11 @@ $_SESSION['cedula'] = $cedula;
 <html>
 <head><link rel="stylesheet" href="estilos.css"></head>
 <body>
-    <h1>USUARIO REGISTRADO</h1>
-    <p>Bienvenido, <?= htmlspecialchars($nombre) ?>.</p>
-    <p><a href="index.php">Volver al menú</a></p>
+    <div class="contenedor contenedor--angosta">
+        <span class="eyebrow exito">Registro exitoso</span>
+        <h1>Usuario registrado</h1>
+        <p>Bienvenido, <?= htmlspecialchars($nombre) ?>.</p>
+        <p><a href="index.php">Volver al menú</a></p>
+    </div>
 </body>
 </html>
